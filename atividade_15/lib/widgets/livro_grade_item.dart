@@ -13,26 +13,30 @@ class LivroGradeItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final livro = Provider.of<Livro>(context);
     return GridTile(
-      child: GestureDetector(
-        onTap: () {
-          Navigator.of(context).pushNamed(
-            DetalhesLivro.routeName,
-            arguments: {
-              "id": livro.id,
-            },
-          );
-        },
-        child: Container(
-          padding: EdgeInsets.all(8.0),
-          decoration: BoxDecoration(
-            border: Border.all(),
-          ),
-          child: Image.network(
-            livro.urlImagem,
-            fit: BoxFit.fill,
+        child: GestureDetector(
+          onTap: () {
+            Navigator.of(context).pushNamed(
+              DetalhesLivro.routeName,
+              arguments: {
+                "id": livro.id,
+              },
+            );
+          },
+          child: Container(
+            width: 200.0,
+            height: 500.0,
+            padding: EdgeInsets.all(4.0),
+            child: Image.network(
+              livro.urlCapa,
+              fit: BoxFit.fill,
+            ),
           ),
         ),
-      ),
-    );
+        footer: GridTileBar(
+          backgroundColor: Color.fromRGBO(90, 90, 90, 1),
+          title: Center(
+            child: Text(livro.titulo),
+          ),
+        ));
   }
 }

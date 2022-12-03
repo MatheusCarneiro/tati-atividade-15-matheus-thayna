@@ -123,19 +123,20 @@ class LivroRepository with ChangeNotifier {
   ///Cria um Livro, envia para o _saveRemote e
   ///processa o resultado.
   ///
-  Future<String?> adicionar(
-      String titulo, String descricao, double valor, String urlImagem) async {
+  Future<String?> adicionar(String titulo, String autor, String edicao,
+      String dataLeitura, String urlCapa, String opiniao) async {
     //Indica que está processando
     _status = Status.working;
     notifyListeners();
 
     final livro = Livro(
-      id: '',
-      titulo: titulo,
-      descricao: descricao,
-      urlImagem: urlImagem,
-      valor: valor,
-    );
+        id: '',
+        titulo: titulo,
+        autor: autor,
+        edicao: edicao,
+        dataLeitura: dataLeitura,
+        urlCapa: urlCapa,
+        opiniao: opiniao);
 
     final result = await _saveRemote(livro);
 

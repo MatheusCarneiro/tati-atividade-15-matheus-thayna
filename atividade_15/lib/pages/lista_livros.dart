@@ -43,7 +43,7 @@ class ListaLivros extends StatelessWidget {
                   leading: SizedBox(
                     height: 50,
                     width: 50,
-                    child: Image.network(livro.urlImagem),
+                    child: Image.network(livro.urlCapa),
                   ),
                   title: Text(livro.titulo)),
             ),

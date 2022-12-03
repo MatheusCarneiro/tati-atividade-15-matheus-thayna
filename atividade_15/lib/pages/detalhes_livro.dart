@@ -25,9 +25,8 @@ class DetalhesLivro extends StatelessWidget {
       body: Container(
         child: Column(
           children: [
-            Image.network(livro.urlImagem),
+            Image.network(livro.urlCapa),
             Text(livro.titulo),
-            Text("R\$ ${livro.valor}"),
           ],
         ),
       ),

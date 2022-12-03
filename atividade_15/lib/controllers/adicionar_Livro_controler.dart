@@ -5,18 +5,22 @@ import '../utils/enums.dart';
 
 class AdicionarLivroControler with ChangeNotifier {
   String _titulo = "";
-  String _descricao = "";
-  double _valor = 0.0;
-  String _urlImagem = "";
+  String _autor = "";
+  String _edicao = "";
+  String _dataLeitura = "";
+  String _urlCapa = "";
+  String _opiniao = "";
 
   final LivroRepository _repositorio;
 
   AdicionarLivroControler(this._repositorio);
 
   String get titulo => _titulo;
-  String get descricao => _descricao;
-  double get valor => _valor;
-  String get urlImagem => _urlImagem;
+  String get autor => _autor;
+  String get edicao => _edicao;
+  String get dataLeitura => _dataLeitura;
+  String get urlImagem => _urlCapa;
+  String get opiniao => _opiniao;
 
   Status _status = Status.idle;
 
@@ -24,9 +28,11 @@ class AdicionarLivroControler with ChangeNotifier {
 
   bool get isValid {
     return validarTitulo(_titulo) == null &&
-        validarDescricao(_descricao) == null &&
-        validarValor(_valor.toString()) == null &&
-        validarUrl(_urlImagem) == null;
+        validarAutor(_autor) == null &&
+        validarUrl(_urlCapa) == null &&
+        validarEdicao(_edicao) == null &&
+        validarData(_dataLeitura) == null &&
+        validarOpiniao(_opiniao) == null;
   }
 
   String? validarTitulo(String? val) {
@@ -39,23 +45,32 @@ class AdicionarLivroControler with ChangeNotifier {
     return null;
   }
 
-  String? validarDescricao(String? val) {}
-
-  String? validarValor(String? val) {
+  String? validarAutor(String? val) {
     if (val == null || val.isEmpty) {
-      return "O valor não pode ser vazio";
+      return "O nome do autor não pode estar vazio";
     }
-    double? v = double.tryParse(val);
-    if (v == null) {
-      return "Valor inválido";
+    return null;
+  }
+
+  String? validarEdicao(String? val) {
+    if (val == null || val.isEmpty) {
+      return "A edição não pode estar vazia";
     }
-    if (v <= 0) {
-      return "O valor deve ser maior que 0";
+    return null;
+  }
+
+  String? validarData(String? val) {
+    if (val == null || val.isEmpty) {
+      return "A data não pode estar vazia";
+    } else if (val.length < 10) {
+      return "A data está no formato errado. Formato: DD/MM/AAAA";
     }
     return null;
   }
 
   String? validarUrl(String? val) {}
+
+  String? validarOpiniao(String? val) {}
 
   setTitulo(String val) {
     _titulo = val;
@@ -63,18 +78,28 @@ class AdicionarLivroControler with ChangeNotifier {
     notifyListeners();
   }
 
-  setDescricao(String val) {
-    _descricao = val;
+  setAutor(String val) {
+    _autor = val;
     notifyListeners();
   }
 
-  setValor(double val) {
-    _valor = val;
+  setEdicao(String val) {
+    _edicao = val;
+    notifyListeners();
+  }
+
+  setData(String val) {
+    _dataLeitura = val;
     notifyListeners();
   }
 
   setUrl(String val) {
-    _urlImagem = val;
+    _urlCapa = val;
+    notifyListeners();
+  }
+
+  setOpiniao(String val) {
+    _opiniao = val;
     notifyListeners();
   }
 
@@ -85,11 +110,7 @@ class AdicionarLivroControler with ChangeNotifier {
     notifyListeners();
 
     final resp = await _repositorio.adicionar(
-      _titulo,
-      _descricao,
-      _valor,
-      _urlImagem,
-    );
+        _titulo, _autor, _edicao, _dataLeitura, _urlCapa, _opiniao);
 
     _status = Status.done;
     notifyListeners();
