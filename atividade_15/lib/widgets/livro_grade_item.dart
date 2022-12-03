@@ -23,8 +23,6 @@ class LivroGradeItem extends StatelessWidget {
             );
           },
           child: Container(
-            width: 200.0,
-            height: 500.0,
             padding: EdgeInsets.all(4.0),
             child: Image.network(
               livro.urlCapa,
